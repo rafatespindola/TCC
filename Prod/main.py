@@ -2,7 +2,7 @@ import logging
 # from serial import Serial
 from Aplicacao import Aplicacao
 from Codificador import Codificador
-from Trasmissor import Transmissor
+from Physic import Transmissor
 import poller
 import sys
 

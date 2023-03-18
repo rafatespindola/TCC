@@ -23,9 +23,9 @@ class Transmissor(Subcamada):
         # The sampling rate of the analog to digital convert
         sampling_rate = 48000.0
         # frequency of symbols to generate
-        frequency_list = [1000.0, 1300.0, 1600.0, 1900.0, 2200.0, 2500.0, 2800.0, 3100.0]
+        frequency_list = [300.0, 323.0, 345.0, 366.0, 388.0, 409.0, 430.0, 452.0]
         # symbol length in seconds
-        duration = 0.050  # seconds
+        duration = 0.09  # seconds
         # amplitude of the audio
         amplitude = 16000
 
