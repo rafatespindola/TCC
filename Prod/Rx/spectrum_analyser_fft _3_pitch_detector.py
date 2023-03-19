@@ -27,27 +27,7 @@ while 1:
     f_bins = data_fft[0:50] > 1
 
     # print(f_bins[1:])
-    if f_bins[8] == True:
-        print('58')
-    elif f_bins[9] == True:
-        print('65')
-    elif f_bins[10] == True:
-        print('72')        
-    elif f_bins[11] == True:
-        print('79')                
-    elif f_bins[12] == True:
-        print('12')
-    elif f_bins[13] == True:
-        print('13')
-    elif f_bins[14] == True:
-        print('300')        
-    elif f_bins[15] == True:
-        print('323')
-    elif f_bins[16] == True:
-        print('345')
-    elif f_bins[17] == True:
-        print('366')        
-    elif f_bins[18] == True:
+    if f_bins[18] == True:
         print('388')
     elif f_bins[19] == True:
         print('409')
@@ -67,48 +47,3 @@ while 1:
         print('562')        
     elif f_bins[27] == True:
         print('580')
-    elif f_bins[28] == True:
-        print('28')
-    elif f_bins[29] == True:
-        print('29')                                              
-    elif f_bins[30] == True:
-        print('30')
-    elif f_bins[31] == True:
-        print('31')
-    elif f_bins[32] == True:
-        print('32')
-    elif f_bins[33] == True:
-        print('33')        
-    elif f_bins[34] == True:
-        print('34')
-    elif f_bins[35] == True:
-        print('35')
-    elif f_bins[36] == True:
-        print('36')        
-    elif f_bins[37] == True:
-        print('37')
-    elif f_bins[38] == True:
-        print('38')
-    elif f_bins[39] == True:
-        print('39')         
-    elif f_bins[40] == True:
-        print('40')
-    elif f_bins[41] == True:
-        print('41')
-    elif f_bins[42] == True:
-        print('42')
-    elif f_bins[43] == True:
-        print('43')        
-    elif f_bins[44] == True:
-        print('44')
-    elif f_bins[45] == True:
-        print('45')
-    elif f_bins[46] == True:
-        print('46')        
-    elif f_bins[47] == True:
-        print('47')
-    elif f_bins[48] == True:
-        print('38')
-    elif f_bins[49] == True:
-        print('49')                 
-    
