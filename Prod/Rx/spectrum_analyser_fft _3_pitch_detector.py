@@ -20,17 +20,9 @@ stream = p.open(
 )
 
 
-# fig, ax1 = plt.subplots()
-# x_fft = np.linspace(0, RATE, CHUNK) # linspace(start, end, num_pontos)
-# line_fft, = ax1.semilogx(x_fft, np.random.rand(CHUNK), 'b')
-# ax1.set_xlim(20,RATE/2)
-# ax1.set_ylim(0,3)
-# fig.show()
-
-
 while 1:
-    data = stream.read(CHUNK) # Pega um pedaco
-    data_int = struct.unpack(str(CHUNK) + 'h', data) # Transforma em vetor de int
+    data = stream.read(CHUNK)
+    data_int = struct.unpack(str(CHUNK) + 'h', data)
     data_fft = np.abs(np.fft.fft(data_int))*2/(11000*CHUNK)
     f_bins = data_fft[0:50] > 1
 
