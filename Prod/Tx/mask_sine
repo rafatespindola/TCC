@@ -1,0 +1,18 @@
+import numpy as np
+import matplotlib.pylab as plt
+
+# A = np.array([10, 16, 43, 5, 7])
+# B = np.array([15, 43, 5, 71, 44])
+# print(np.multiply(A,B))
+
+duration = 1
+sampling_rate = 100
+t = int(duration * sampling_rate)
+x = np.linspace(0, np.pi, t)
+y = np.sin(x)
+plt.plot(x, y)
+plt.xlabel('Angle [rad]')
+plt.ylabel('sin(x)')
+plt.axis('tight')
+plt.show()
+print(str(y))
