@@ -5,11 +5,24 @@ import numpy as np
     FSK symbols generate
 """
 def FSK_generate_symbols(frequencies, duration, sampling_rate):
+    # symbols = []
+    # t = int(duration * sampling_rate)  # 480
+    # template = np.arange(t) / sampling_rate  #
+    # for freq in frequencies:
+    #     symbol = np.sin(template * freq * 2 * np.pi)
+    #     symbols.append(symbol)
+    # return symbols
+    # np.multiply
+
     symbols = []
     t = int(duration * sampling_rate)  # 480
     template = np.arange(t) / sampling_rate  #
+    x = np.linspace(0, np.pi, t)
+    mask = np.sin(x)
     for freq in frequencies:
-        symbol = np.sin(template * freq * 2 * np.pi)
+        # symbol = np.sin(template * freq * 2 * np.pi)
+        sinal = np.sin(template * freq * 2 * np.pi)
+        symbol = np.multiply(sinal, mask)
         symbols.append(symbol)
     return symbols
 
