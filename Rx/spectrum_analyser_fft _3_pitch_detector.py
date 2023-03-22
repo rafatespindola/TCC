@@ -59,9 +59,25 @@ while 1:
         last_buffer = buffer
 
 
-    if buffer == '13015757565157465754576513151265123757401201574756545656565756201262126756745762132012031312120212321231':
-        print('chegou: Uma trolha de coisa')
+    if buffer == '1201':
+        print('chegou: a')
         buffer = ''
+    elif buffer == '1202':
+        print('chegou: b')
+        buffer = ''
+    elif buffer == '1203':
+        print('chegou: c')
+        buffer = ''
+    elif buffer == '1210':
+        print('chegou: d')
+        buffer = ''    
+    elif buffer == '1215':
+        print('chegou: e')
+        buffer = ''    
+    elif buffer == '1212':
+        print('chegou: f')
+        buffer = ''    
+    elif buffer == '1213':
+        print('chegou: g')
+        buffer = ''    
     
-    
-
