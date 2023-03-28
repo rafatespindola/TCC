@@ -27,7 +27,7 @@ class Transmissor(Subcamada):
         #                 0      1      2      3      4      5      6      7
         frequency_list = [689.0, 733.0, 430.0, 474.0, 516.0, 562.0, 604.0, 646.0]
         # symbol length in seconds
-        duration = 0.09  # seconds
+        duration = 0.15  # seconds
         # amplitude of the audio
         amplitude = 16000
 
@@ -36,39 +36,7 @@ class Transmissor(Subcamada):
         # generate symbols
         symbol = FSK_generate_symbols(frequency_list, duration, sampling_rate)
 
-        # data to modulate
-        # data = [0, 1]
-
-        # import random
-        # data = [random.getrandbits(1) for i in range(100)]
-        # data = []
-        # from Codificador import State
-        # for i in quadro.freq_seq:
-        #     if i == State.f1:
-        #         data.append(0)
-        #         data.append(0)
-        #     elif i == State.f2:
-        #         data.append(0)
-        #         data.append(1)
-        #     elif i == State.f3:
-        #         data.append(1)
-        #         data.append(0)
-        #     elif i == State.f4:
-        #         data.append(1)
-        #         data.append(1)
-        #     elif i == State.f5:
-        #         data.append(0)
-        #         data.append(0)
-        #     elif i == State.f6:
-        #         data.append(0)
-        #         data.append(1)
-        #     elif i == State.f7:
-        #         data.append(1)
-        #         data.append(0)
-        #     elif i == State.f8:
-        #         data.append(1)
-        #         data.append(1)
-
+            
         # generate an audio based on data fsk
         audio = generate_audio(quadro.freq_seq, symbol)
 
@@ -91,5 +59,10 @@ class Transmissor(Subcamada):
         wav_file.close()
 
         playsound('tx_data.wav')
+
+
+
+
+
 
 
