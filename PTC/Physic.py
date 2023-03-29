@@ -27,7 +27,7 @@ class Transmissor(Subcamada):
         #                 0      1      2      3      4      5      6      7
         frequency_list = [430.0, 474.0, 516.0, 562.0, 604.0, 646.0, 689.0, 733.0]
         # symbol length in seconds
-        duration = 0.15  # seconds
+        duration = 0.2    # seconds
         # amplitude of the audio
         amplitude = 16000
 

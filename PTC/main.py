@@ -1,5 +1,5 @@
 import logging
-# from serial import Serial
+from serial import Serial
 from Aplicacao import Aplicacao
 from Codificador import Codificador
 from Physic import Transmissor
@@ -9,7 +9,7 @@ import sys
 
 if __name__ == '__main__':
     # Create serial port
-    # serial_port = Serial(sys.argv[1], 9600)
+    serial_port = Serial('/dev/pts/36', 9600)
     logging.basicConfig(level=logging.DEBUG)  # DEBUG, INFO, WARNING, ERROR, CRITICAL
 
 
@@ -17,7 +17,7 @@ if __name__ == '__main__':
     # enq = Enquadramento(serial_port, 5)
     # arq = Arq(4)
     # ses = Sessao(5)
-    app = Aplicacao()
+    app = Aplicacao(serial_port)
     cod = Codificador()
     tms = Transmissor()
 

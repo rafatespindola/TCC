@@ -23,6 +23,9 @@ stream = p.open(
 buffer = ''
 last_symbol = -1
 last_buffer = ''
+times = 0
+candidate = ''
+required_times = 4
 
 while 1:
     data = stream.read(CHUNK)
@@ -31,30 +34,112 @@ while 1:
     f_bins = data_fft[0:50] > 1
 
 
-    if f_bins[20] and last_symbol != 20:
-        buffer += '0'
-        last_symbol = 20
-    elif f_bins[22] and last_symbol != 22:
-        buffer += '1'
-        last_symbol = 22
-    elif f_bins[24] and last_symbol != 24:
-        buffer += '2'
-        last_symbol = 24
-    elif f_bins[26] and last_symbol != 26:
-        buffer += '3'
-        last_symbol = 26
-    elif f_bins[28] and last_symbol != 28:
-        buffer += '4'
-        last_symbol = 28
-    elif f_bins[30] and last_symbol != 30:
-        buffer += '5'
-        last_symbol = 30
-    elif f_bins[32] and last_symbol != 32:
-        buffer += '6'
-        last_symbol = 32
-    elif f_bins[34] and last_symbol != 34:
-        buffer += '7'
-        last_symbol = 34
+
+    if f_bins[20]:
+        if candidate == '0':
+            times += 1 
+        else:
+            times = 1    
+            candidate = '0'
+        
+        if times > required_times and last_symbol != 20 and candidate == '0':
+            buffer += '0'
+            last_symbol = 20
+    elif f_bins[22]:
+        if candidate == '1':
+            times = times + 1 
+        else:
+            times = 1    
+            candidate = '1'
+        
+        if times > required_times and last_symbol != 22  and candidate == '1':
+            buffer += '1'
+            last_symbol = 22
+    elif f_bins[24]:
+        if candidate == '2':
+            times += 1 
+        else:
+            times = 1    
+            candidate = '2'
+        
+        if times > required_times and last_symbol != 24 and candidate == '2':
+            buffer += '2'
+            last_symbol = 24
+    elif f_bins[26]:
+        if candidate == '3':
+            times += 1 
+        else:
+            times = 1    
+            candidate = '3'
+        
+        if times > required_times and last_symbol != 26 and candidate == '3':
+            buffer += '3'
+            last_symbol = 26
+    elif f_bins[28]:
+        if candidate == '4':
+            times += 1 
+        else:
+            times = 1    
+            candidate = '4'
+        
+        if times > required_times and last_symbol != 28  and candidate == '4':
+            buffer += '4'
+            last_symbol = 28
+    elif f_bins[30]:
+        if candidate == '5':
+            times += 1 
+        else:
+            times = 1    
+            candidate = '5'
+        
+        if times > required_times and last_symbol != 30 and candidate == '5':
+            buffer += '5'
+            last_symbol = 30
+    elif f_bins[32]:
+        if candidate == '6':
+            times += 1 
+        else:
+            times = 1    
+            candidate = '6'
+        
+        if times > required_times and last_symbol != 32 and candidate == '6':
+            buffer += '6'
+            last_symbol = 32 
+    elif f_bins[34]:
+        if candidate == '7':
+            times += 1 
+        else:
+            times = 1    
+            candidate = '7'
+        
+        if times > required_times and last_symbol != 34 and candidate == '7':
+            buffer += '7'
+            last_symbol = 34
+
+    # if f_bins[20] and last_symbol != 20:
+    #     buffer += '0'
+    #     last_symbol = 20
+    # elif f_bins[22] and last_symbol != 22:
+    #     buffer += '1'
+    #     last_symbol = 22
+    # elif f_bins[24] and last_symbol != 24:
+    #     buffer += '2'
+    #     last_symbol = 24
+    # elif f_bins[26] and last_symbol != 26:
+    #     buffer += '3'
+    #     last_symbol = 26
+    # elif f_bins[28] and last_symbol != 28:
+    #     buffer += '4'
+    #     last_symbol = 28
+    # elif f_bins[30] and last_symbol != 30:
+    #     buffer += '5'
+    #     last_symbol = 30
+    # elif f_bins[32] and last_symbol != 32:
+    #     buffer += '6'
+    #     last_symbol = 32
+    # elif f_bins[34] and last_symbol != 34:
+    #     buffer += '7'
+    #     last_symbol = 34
         
     if len(buffer) > 0 and buffer != last_buffer: 
         print(buffer)
