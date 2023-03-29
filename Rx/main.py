@@ -19,8 +19,9 @@ stream = p.open(
     frames_per_buffer=CHUNK
 )
 
+#Initial condition
 buffer = ''
-last_simbol = -1
+last_symbol = -1
 last_buffer = ''
 
 while 1:
@@ -30,115 +31,115 @@ while 1:
     f_bins = data_fft[0:50] > 1
 
 
-    if f_bins[32] and last_simbol != 32:
+    if f_bins[20] and last_symbol != 20:
         buffer += '0'
-        last_simbol = 32
-    elif f_bins[34] and last_simbol != 34:
+        last_symbol = 20
+    elif f_bins[22] and last_symbol != 22:
         buffer += '1'
-        last_simbol = 34
-    elif f_bins[20] and last_simbol != 20:
+        last_symbol = 22
+    elif f_bins[24] and last_symbol != 24:
         buffer += '2'
-        last_simbol = 20
-    elif f_bins[22] and last_simbol != 22:
+        last_symbol = 24
+    elif f_bins[26] and last_symbol != 26:
         buffer += '3'
-        last_simbol = 22
-    elif f_bins[24] and last_simbol != 24:
+        last_symbol = 26
+    elif f_bins[28] and last_symbol != 28:
         buffer += '4'
-        last_simbol = 24
-    elif f_bins[26] and last_simbol != 26:
+        last_symbol = 28
+    elif f_bins[30] and last_symbol != 30:
         buffer += '5'
-        last_simbol = 26
-    elif f_bins[28] and last_simbol != 28:
+        last_symbol = 30
+    elif f_bins[32] and last_symbol != 32:
         buffer += '6'
-        last_simbol = 28
-    elif f_bins[30] and last_simbol != 30:
+        last_symbol = 32
+    elif f_bins[34] and last_symbol != 34:
         buffer += '7'
-        last_simbol = 30
+        last_symbol = 34
         
     if len(buffer) > 0 and buffer != last_buffer: 
         print(buffer)
         last_buffer = buffer
 
 
-    if buffer == '1201' or buffer == '5645':
+    if buffer in ('1201', '5645'):
         print('chegou: a')
         buffer = ''
-    elif buffer == '1202' or buffer == '5646':
+    elif buffer in ('1202', '5646'):
         print('chegou: b')
         buffer = ''
-    elif buffer == '1203' or buffer == '5647':
+    elif buffer in ('1203', '5647'):
         print('chegou: c')
         buffer = ''
-    elif buffer == '1210' or buffer == '5654':
+    elif buffer in ('1210', '5654'):
         print('chegou: d')
         buffer = ''    
-    elif buffer == '1215' or buffer == '5651':
+    elif buffer in ('1215', '5651'):
         print('chegou: e')
         buffer = ''    
-    elif buffer == '1212' or buffer == '5656':
+    elif buffer in ('1212', '5656'):
         print('chegou: f')
         buffer = ''    
-    elif buffer == '1213' or buffer == '5657':
+    elif buffer in ('1213', '5657'):
         print('chegou: g')
         buffer = ''    
-    elif buffer == '1264' or buffer == '5620':
+    elif buffer in ('1264', '5620'):
         print('chegou: h')
         buffer = ''
-    elif buffer == '1265' or buffer == '5621':
+    elif buffer in ('1265', '5621'):
         print('chegou: i')
         buffer = ''
-    elif buffer == '1262' or buffer == '5626':
+    elif buffer in ('1262', '5626'):
         print('chegou: j')
         buffer = ''
-    elif buffer == '1267' or buffer == '5623':
+    elif buffer in ('1267', '5623'):
         print('chegou: k')
         buffer = ''
-    elif buffer == '1230' or buffer == '5674':
+    elif buffer in ('1230', '5674'):
         print('chegou: l')
         buffer = ''
-    elif buffer == '1231' or buffer == '5675':
+    elif buffer in ('1231', '5675'):
         print('chegou: m')
         buffer = ''
-    elif buffer == '1232' or buffer == '5676':
+    elif buffer in ('1232', '5676'):
         print('chegou: n')
         buffer = ''
-    elif buffer == '1237' or buffer == '5673':
+    elif buffer in ('1237', '5673'):
         print('chegou: o')
         buffer = ''
-    elif buffer == '1304' or buffer == '5740':
+    elif buffer in ('1304', '5740'):
         print('chegou: p')
         buffer = ''
-    elif buffer == '1301' or buffer == '5745':
+    elif buffer in ('1301', '5745'):
         print('chegou: q')
         buffer = ''
-    elif buffer == '1302' or buffer == '5746':
+    elif buffer in ('1302', '5746'):
         print('chegou: r')
         buffer = ''
-    elif buffer == '1303' or buffer == '5747':
+    elif buffer in ('1303', '5747'):
         print('chegou: s')
         buffer = ''
-    elif buffer == '1310' or buffer == '5754':
+    elif buffer in ('1310', '5754'):
         print('chegou: t')
         buffer = ''
-    elif buffer == '1315' or buffer == '5751':
+    elif buffer in ('1315', '5751'):
         print('chegou: u')
         buffer = ''
-    elif buffer == '1312' or buffer == '5756':
+    elif buffer in ('1312', '5756'):
         print('chegou: v')
         buffer = ''
-    elif buffer == '1313' or buffer == '5757':
+    elif buffer in ('1313', '5757'):
         print('chegou: w')
         buffer = ''
-    elif buffer == '1321' or buffer == '5765':
+    elif buffer in ('1321', '5765'):
         print('chegou: y')
         buffer = ''
-    elif buffer == '1320' or buffer == '5764':
+    elif buffer in ('1320', '5764'):
         print('chegou: x')
         buffer = ''
-    elif buffer == '1326' or buffer == '5762':
+    elif buffer in ('1326', '5762'):
         print('chegou: z')
         buffer = ''
-    elif buffer == '0204' or buffer == '4640':
+    elif buffer in ('0204', '4640'):
         print('chegou: espaço')
         buffer = ''
 
