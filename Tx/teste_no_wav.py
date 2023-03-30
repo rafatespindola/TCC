@@ -33,17 +33,3 @@ stream.stop_stream()
 stream.close()
 
 p.terminate()
-
-
-
-# symbols = []
-# t = int(duration * sampling_rate)  # 480
-# template = np.arange(t) / sampling_rate  #
-# x = np.linspace(0, np.pi, t)
-# mask = np.sin(x)
-# for freq in frequencies:
-#     # symbol = np.sin(template * freq * 2 * np.pi)
-#     sinal = np.sin(template * freq * 2 * np.pi)
-#     symbol = np.multiply(sinal, mask)
-#     symbols.append(symbol)
-# return symbols

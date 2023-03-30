@@ -1,64 +1,57 @@
-import sys
 from Subcamada import Subcamada
 from Quadro import Quadro
-import logging  # https://realpython.com/python-logging/
 import wave
 import struct
 from functions import FSK_generate_symbols, generate_audio
 from playsound import playsound
+import numpy as np
 
 
-class Transmissor(Subcamada):
+class Physic(Subcamada):
 
     def __init__(self):
         Subcamada.__init__(self, None, 3)
         self.disable_timeout()
-        logging.basicConfig(level=logging.WARNING)  # DEBUG, INFO, WARNING, ERROR, CRITICAL
 
     def envia(self, quadro):
-        logging.info('Tx.recebe(): Recebeu quadro do Codificador')
-        self.fromFreqToAudio(quadro)
+        bytes_hex = quadro.data.hex()
+        bytes_hex_esc = self.do_not_repeat_symbol(bytes_hex)
+        self.from_hex_to_audio(bytes_hex_esc)
 
-    def fromFreqToAudio(self, quadro):
-        # The sampling rate of the analog to digital convert
-        sampling_rate = 48000.0
-        # frequency of symbols to generate
-        #                 00     01     10     11     00     01     10     11
+    def do_not_repeat_symbol(self, bytes_hex):
+        last = ''
+        bytes_hex_esc = ''
+        for b in bytes_hex:
+            if b == last:
+                bytes_hex_esc += 'g' # ESC
+            else:
+                bytes_hex_esc += b
+        return bytes_hex_esc
+
+    def from_hex_to_audio(self):
         #                 0      1      2      3      4      5      6      7
-        frequency_list = [430.0, 474.0, 516.0, 562.0, 604.0, 646.0, 689.0, 733.0]
-        # symbol length in seconds
-        duration = 0.2    # seconds
-        # amplitude of the audio
-        amplitude = 16000
+        frequency_list = [430.0, 452.0, 474.0, 496.0, 516.0, 538.0, 562.0, 580.0, 
+        #                 8      9      a      b      c      d      e      f
+                          604.0, 624.0, 646.0, 668.0, 689.0, 711.0, 733.0, 752.0,
+        #                 g (esc)                  
+                          774.0]
+        duration = 0.2  # in seconds
+        sampling_rate = 44100.0 
+        symbol = self.fsk_generate_symbols(frequency_list, duration, sampling_rate)
+        # a partir dos simbolos, montar o audio com o teste_no_wav
 
-        audiofile = "tx_data.wav"
+    def fsk_generate_symbols(self, frequency_list, duration, sampling_rate):
+        symbols = []
+        t = int(duration * sampling_rate)  # 480
+        template = np.arange(t) / sampling_rate  #
+        x = np.linspace(0, np.pi, t)
+        mask = np.sin(x)
+        for freq in frequency_list:
+            sinal = np.sin(template * freq * 2 * np.pi)
+            symbol = np.multiply(sinal, mask)
+            symbols.append(symbol)
+        return symbols
 
-        # generate symbols
-        symbol = FSK_generate_symbols(frequency_list, duration, sampling_rate)
-
-            
-        # generate an audio based on data fsk
-        audio = generate_audio(quadro.freq_seq, symbol)
-
-        # file properties
-        nframes = len(audio)
-        comptype = "NONE"
-        compname = "not compressed"
-        nchannels = 1
-        sampwidth = 2
-
-        # open wave file
-        wav_file = wave.open(audiofile, 'w')
-        # set properties
-        wav_file.setparams((nchannels, sampwidth, int(sampling_rate), nframes, comptype, compname))
-
-        # write the audio to file
-        for s in audio:
-            wav_file.writeframes(struct.pack('h', int(s * amplitude)))
-
-        wav_file.close()
-
-        playsound('tx_data.wav')
 
 
 

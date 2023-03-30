@@ -12,11 +12,8 @@ class Aplicacao(Subcamada):
         print('> ' + quadro.dados.decode('ascii'))
 
     def handle(self):
-        msg = sys.stdin.readline()[:-1]
-        dados = msg.encode('ascii')
+        quadro = Quadro()
+        info = sys.stdin.readline()[:-1]
+        quadro.data = info.encode('ascii') 
+        self.lower.envia(quadro)
 
-        while len(dados) > 0:
-            quadro = Quadro()
-            quadro.data = dados[0:32]
-            self.lower.envia(quadro)
-            dados = dados[32:]
