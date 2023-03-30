@@ -34,6 +34,7 @@ while 1:
     f_bins = data_fft[0:50] > 1
 
 
+    print(f_bins[20:36])
 
     if f_bins[20]:
         if candidate == '0':
