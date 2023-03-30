@@ -1,7 +1,6 @@
 import logging
 from serial import Serial
 from Aplicacao import Aplicacao
-from Codificador import Codificador
 from Physic import Physic
 import poller
 
