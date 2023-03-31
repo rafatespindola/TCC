@@ -13,7 +13,6 @@ class Physic(Subcamada):
     def envia(self, quadro):
         bytes_hex = quadro.data.hex()
         bytes_hex_esc = self.do_not_repeat_symbol(bytes_hex)
-        print('psc.envia: bytes_hex_esc: ' + bytes_hex_esc)
         self.from_hex_to_audio(bytes_hex_esc)
 
     def do_not_repeat_symbol(self, bytes_hex):
@@ -37,7 +36,7 @@ class Physic(Subcamada):
         duration = 0.2  # in seconds
         sampling_rate = 44100.0 
         symbol_list = self.generate_symbols(frequency_list, duration, sampling_rate)
-        audio = self.genetate_audio(symbol_list, bytes_hex_esc)
+        audio = self.generate_audio(symbol_list, bytes_hex_esc)
         self.play(audio)
 
     def play(self, audio):
@@ -54,7 +53,7 @@ class Physic(Subcamada):
         stream.close()
         p.terminate()    
 
-    def genetate_audio(self, symbol_list, sequence):
+    def generate_audio(self, symbol_list, sequence):
         audio = b''
         for s in sequence:
             if s == '0':
