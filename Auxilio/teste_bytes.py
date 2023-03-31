@@ -1,4 +1,4 @@
-frase = 'Ola mundo'
+frase = 'qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM123456789'
 
 # Printar com tipo string o valor de 'frase' em hexa
 print(frase.encode('ascii').hex())

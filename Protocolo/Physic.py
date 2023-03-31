@@ -1,9 +1,4 @@
 from Subcamada import Subcamada
-from Quadro import Quadro
-import wave
-import struct
-from functions import FSK_generate_symbols, generate_audio
-from playsound import playsound
 import numpy as np
 import pyaudio
 
@@ -13,21 +8,23 @@ class Physic(Subcamada):
     def __init__(self):
         Subcamada.__init__(self, None, 3)
         self.disable_timeout()
-
+        self.last_symbol = ''
 
     def envia(self, quadro):
         bytes_hex = quadro.data.hex()
         bytes_hex_esc = self.do_not_repeat_symbol(bytes_hex)
+        print('psc.envia: bytes_hex_esc: ' + bytes_hex_esc)
         self.from_hex_to_audio(bytes_hex_esc)
 
     def do_not_repeat_symbol(self, bytes_hex):
-        last = ''
         bytes_hex_esc = ''
         for b in bytes_hex:
-            if b == last:
+            if b == self.last_symbol:
                 bytes_hex_esc += 'g' # ESC
+                self.last_symbol = 'g'
             else:
                 bytes_hex_esc += b
+                self.last_symbol = b
         return bytes_hex_esc
 
     def from_hex_to_audio(self, bytes_hex_esc):
@@ -35,7 +32,7 @@ class Physic(Subcamada):
         frequency_list = [430.0, 452.0, 474.0, 496.0, 516.0, 538.0, 562.0, 580.0, 
         #                 8      9      a      b      c      d      e      f
                           604.0, 624.0, 646.0, 668.0, 689.0, 711.0, 733.0, 752.0,
-        #                 g (esc)                  
+        #                 g(esc)                  
                           774.0]
         duration = 0.2  # in seconds
         sampling_rate = 44100.0 
@@ -56,7 +53,6 @@ class Physic(Subcamada):
         stream.stop_stream()
         stream.close()
         p.terminate()    
-
 
     def genetate_audio(self, symbol_list, sequence):
         audio = b''
