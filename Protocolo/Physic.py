@@ -27,12 +27,13 @@ class Physic(Subcamada):
         return bytes_hex_esc
 
     def from_hex_to_audio(self, bytes_hex_esc):
-        #                 0      1      2      3      4      5      6      7
-        frequency_list = [430.0, 452.0, 474.0, 496.0, 516.0, 538.0, 562.0, 580.0, 
-        #                 8      9      a      b      c      d      e      f
-                          604.0, 624.0, 646.0, 668.0, 689.0, 711.0, 733.0, 752.0,
-        #                 g(esc)                  
-                          774.0]
+        #                 Explicação: representação_em_hexa[slot_freq]
+        #                 0[20]  1[22]  2[24]  3[26]  4[28]  5[30]  6[32]  7[34]
+        frequency_list = [430.0, 474.0, 516.0, 562.0, 604.0, 646.0, 689.0, 733.0,
+        #                 8[36]  9[38]  a[40]  b[42]  c[44]  d[46]  e[48]  f[50]    
+                          774.0, 819.0, 861.0, 905.0, 948.0, 991.0, 1033.0,1076.0, 
+        #                 g(esc)[52]                  
+                          1120.0]
         duration = 0.2  # in seconds
         sampling_rate = 44100.0 
         symbol_list = self.generate_symbols(frequency_list, duration, sampling_rate)
