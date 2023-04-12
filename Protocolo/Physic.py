@@ -12,8 +12,9 @@ class Physic(Subcamada):
 
     def envia(self, quadro):
         bytes_hex = quadro.data.hex()
-        bytes_hex_esc = self.do_not_repeat_symbol(bytes_hex)
-        self.from_hex_to_audio(bytes_hex_esc)
+        hex_esc = self.do_not_repeat_symbol(bytes_hex)
+        esc_reset = self.insert_reset_symbol(hex_esc)
+        self.from_hex_to_audio(esc_reset)
 
     def do_not_repeat_symbol(self, bytes_hex):
         bytes_hex_esc = ''
@@ -32,9 +33,12 @@ class Physic(Subcamada):
         frequency_list = [430.0, 474.0, 516.0, 562.0, 604.0, 646.0, 689.0, 733.0,
         #                 8[36]  9[38]  a[40]  b[42]  c[44]  d[46]  e[48]  f[50]    
                           774.0, 819.0, 861.0, 905.0, 948.0, 991.0, 1033.0,1076.0, 
-        #                 g(esc)[52]                  
-                          1120.0]
-        duration = 0.2  # in seconds
+        #                 g(esc)[52] repete o último simbolo                 
+                          1120.0, 
+        #                 h(reset)[54] reseta o buffer do rx
+                          1161.0]
+        
+        duration = 0.2  # in seconds. Até 0.8 já funcionou bem.
         sampling_rate = 44100.0 
         symbol_list = self.generate_symbols(frequency_list, duration, sampling_rate)
         audio = self.generate_audio(symbol_list, bytes_hex_esc)
@@ -89,9 +93,10 @@ class Physic(Subcamada):
                 audio += symbol_list[14].tobytes()
             elif s == 'f':
                 audio += symbol_list[15].tobytes()
-            elif s == 'g':
+            elif s == 'g': # esc
                 audio += symbol_list[16].tobytes() 
-
+            elif s == 'h': # reset
+                audio += symbol_list[17].tobytes()
         return audio
 
     def generate_symbols(self, frequency_list, duration, sampling_rate):
@@ -105,6 +110,26 @@ class Physic(Subcamada):
             symbol = np.multiply(sinal, mask).astype(np.float32)
             symbol_list.append(symbol)
         return symbol_list
+
+    def insert_reset_symbol(self, hex_esc):
+        # 'h' é o reset symbol
+        # A cada 2X simbolos, 2x porque 1 byte possui 2 símbolos,
+        # é inserido um reset de buffer do rx
+
+        count = 0
+        x = 5 # a cada quantos bytes um reset
+        esc_reset = 'h' # uma comunicação sempre começa com um reset symbol
+
+        for i in hex_esc:
+            esc_reset += i
+            count += 1
+            if count == (2*x):
+                esc_reset += 'h' # reset  
+                count = 0
+
+        print(esc_reset)
+
+        return esc_reset
 
 
 
