@@ -23,6 +23,26 @@ freqs_meaning = {
     '52': 'g', # esc
     '54': 'h'  # reset rx buffer 
 }
+freqs_meaning = {
+    '56': '0',
+    '58': '1',
+    '60': '2',
+    '62': '3',
+    '64': '4',
+    '66': '5',
+    '68': '6',
+    '70': '7',
+    '72': '8',
+    '74': '9',
+    '76': 'a',
+    '78': 'b',
+    '80': 'c',
+    '82': 'd',
+    '84': 'e',
+    '86': 'f',
+    '88': 'g', # esc
+    '90': 'h'  # reset rx buffer 
+}
 
 CHUNK = 1024 * 2
 FORMAT = pa.paInt16
@@ -42,16 +62,21 @@ stream = p.open(
 
 buffer = ''
 last_slot = ''
+channel = 2
 
 while 1:
     data = stream.read(CHUNK)
     data_int = struct.unpack(str(CHUNK) + 'h', data)
     data_fft = np.abs(np.fft.fft(data_int))*2/(11000*CHUNK)
-    f_bins = data_fft[0:90] > 1
+    f_bins = data_fft[0:91] > 1
 
     # Obtem o slot mais baixo e salva no buffer
     if len(np.where(f_bins)[0]) > 0:
         slot = int(np.where(f_bins)[0][0])
+        if channel == 1 and slot not in [20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54]:
+            slot = -1 # não deixa reconhecer uma frequencia que não está no seu canal
+        elif channel == 2 and slot not in [56,58,60,62,64,66,68,70,72,74,76,78,80,82,84,86,88,90]:
+            slot = -1 # não deixa reconhecer uma frequencia que não está no seu canal        
         if str(slot) in freqs_meaning.keys() and last_slot != slot:
             last_slot = slot
             if freqs_meaning[str(slot)] not in 'gh':
