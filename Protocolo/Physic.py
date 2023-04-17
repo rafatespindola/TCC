@@ -9,6 +9,7 @@ class Physic(Subcamada):
         Subcamada.__init__(self, None, 3)
         self.disable_timeout()
         self.last_symbol = ''
+        self.channel = 1
 
     def envia(self, quadro):
         bytes_hex = quadro.data.hex()
@@ -28,15 +29,27 @@ class Physic(Subcamada):
         return bytes_hex_esc
 
     def from_hex_to_audio(self, bytes_hex_esc):
-        #                 Explicação: representação_em_hexa[slot_freq]
-        #                 0[20]  1[22]  2[24]  3[26]  4[28]  5[30]  6[32]  7[34]
-        frequency_list = [430.0, 474.0, 516.0, 562.0, 604.0, 646.0, 689.0, 733.0,
-        #                 8[36]  9[38]  a[40]  b[42]  c[44]  d[46]  e[48]  f[50]    
-                          774.0, 819.0, 861.0, 905.0, 948.0, 991.0, 1033.0,1076.0, 
-        #                 g(esc)[52] repete o último simbolo                 
-                          1120.0, 
-        #                 h(reset)[54] reseta o buffer do rx
-                          1161.0]
+        
+        if self.channel == 1:
+            #                 Explicação: representação_em_hexa[slot_freq]
+            #                 0[20]  1[22]  2[24]  3[26]  4[28]  5[30]  6[32]  7[34]
+            frequency_list = [430.0, 474.0, 516.0, 562.0, 604.0, 646.0, 689.0, 733.0,
+            #                 8[36]  9[38]  a[40]  b[42]  c[44]  d[46]  e[48]  f[50]    
+                            774.0, 819.0, 861.0, 905.0, 948.0, 991.0, 1033.0,1076.0, 
+            #                 g(esc)[52] repete o último simbolo                 
+                            1120.0, 
+            #                 h(reset)[54] reseta o buffer do rx
+                            1161.0]
+        elif self.channel == 2:
+            #                 Explicação: representação_em_hexa[slot_freq]
+            #                 0[56]  1[58]  2[60]  3[62]  4[64]  5[66]  6[68]  7[70]
+            frequency_list = [1205.0,1249.0,1292.0,1335.0,1378.0,1422.0,1465.0,1508.0,
+            #                 8[72]  9[74]  a[76]  b[78]  c[80]  d[82]  e[84]  f[86]    
+                              1550.0,1594.0,1637.0,1680.0,1723.0,1766.0,1808.0,1852.0,
+            #                 g(esc)[88] repete o último simbolo                 
+                              1896.0, 
+            #                 h(reset)[90] reseta o buffer do rx
+                              1938.0]
         
         duration = 0.2  # in seconds. Até 0.8 já funcionou bem.
         sampling_rate = 44100.0 
