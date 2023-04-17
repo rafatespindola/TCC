@@ -9,7 +9,7 @@ class Physic(Subcamada):
         Subcamada.__init__(self, None, 3)
         self.disable_timeout()
         self.last_symbol = ''
-        self.channel = 2
+        self.channel = 1
 
     def envia(self, quadro):
         bytes_hex = quadro.data.hex()
