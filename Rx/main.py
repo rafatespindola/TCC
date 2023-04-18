@@ -3,6 +3,8 @@ import pyaudio as pa
 import struct 
 import matplotlib.pyplot as plt 
 
+channel = 2 # canal para comunicação
+ 
 CHUNK = 1024 * 2
 FORMAT = pa.paInt16
 CHANNELS = 1 # não alterar
@@ -21,7 +23,7 @@ stream = p.open(
 
 buffer = ''
 last_slot = ''
-channel = 1 # canal para comunicação
+
 
 if channel == 1:
     freqs_meaning = {
