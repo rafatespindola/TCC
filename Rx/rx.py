@@ -2,8 +2,9 @@ import numpy as np
 import pyaudio as pa 
 import struct 
 
-channel = 2 # canal para comunicação
- 
+global channel
+channel = int(input('Canal? [1/2]'))
+
 CHUNK = 1024 * 2
 FORMAT = pa.paInt16
 CHANNELS = 1 # não alterar
@@ -109,7 +110,7 @@ while 1:
 
     if len(buffer) == 2:
         try:
-            print(bytes.fromhex(buffer).decode('ascii'))
+            print(bytes.fromhex(buffer).decode('ascii')) # end = " "
             buffer = ''
         except:
             pass

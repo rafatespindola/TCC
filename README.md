@@ -3,6 +3,11 @@
 > Projeto de TCC de Engenharia de Telecomunicações - IFSC Campus São José
 > 
 
+## Dependências
+
+    - numpy==1.23.3
+    - PyAudio==0.2.13
+
 ## Getting Started - Loopback
 
 > Permite testar com apenas um computador. A parte Tx gera uma informação, transmite pelo ar e outra parte Rx monitora o som e decodifica o sinal recebido:
@@ -11,7 +16,7 @@
     
     ```bash
     cd Rx
-    python3 main.py
+    python3 rx.py
     ```
     
     Pronto. Você já está processando o áudio
@@ -20,7 +25,7 @@
     
     ```bash
     cd Tx
-    python3 main.py
+    python3 tx.py
     ```
     
     Pronto. Você já está preparado para transmitir algo e receber pelo Rx. Digite algo agora!
@@ -44,13 +49,13 @@ Configure assim:
 
 ### PC1
 
-- Configuração do Rx1, linha 6, arquivo `main.py`:
+- Configuração do Rx1, linha 5, arquivo `rx.py`:
     
     ```bash
     channel = 1 # canal para comunicação
     ```
     
-    Configuração Tx1, linha 12, `Physic.py`:
+    Configuração Tx1, linha 8, `tx.py`:
     
     ```bash
     self.channel = 2 # Canal para comunicação
@@ -59,13 +64,13 @@ Configure assim:
 
 ### PC2
 
-- Configuração do Rx1, linha 6, arquivo `main.py`:
+- Configuração do Rx1, linha 5, arquivo `rx.py`:
     
     ```bash
     channel = 2 # canal para comunicação
     ```
     
-    Configuração Tx1, linha 12, `Physic.py`:
+    Configuração Tx1, linha 8, `tx.py`:
     
     ```bash
     self.channel = 1 # Canal para comunicação
@@ -78,14 +83,14 @@ Após os canais configurados, execute os mesmos passos do Lookback em cada PC:
     
     ```bash
     cd Rx
-    python3 main.py
+    python3 rx.py
     ```
     
 2. Executar Tx
     
     ```bash
     cd Tx
-    python3 main.py
+    python3 tx.py
     ```
     
     Agora você pode enviar e receber dados pelo som!

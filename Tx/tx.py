@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 
 
 last_symbol = ''
-channel = 2 # Canal para comunicação
+channel = int(input('Canal? [1/2] '))
 
 def envia(quadro):
         bytes_hex = quadro.data.hex()
@@ -26,6 +26,7 @@ def do_not_repeat_symbol(bytes_hex):
     return bytes_hex_esc
 
 def from_hex_to_audio(bytes_hex_esc):
+    global channel
     if channel == 1:
         #                 Explicação: representação_em_hexa[slot_freq]
         #                 0[20]  1[22]  2[24]  3[26]  4[28]  5[30]  6[32]  7[34]
