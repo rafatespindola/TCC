@@ -1,9 +1,7 @@
-import sys
 import numpy as np
 import pyaudio as pa 
 import struct 
 import crc_ifsc
-import binascii
 
 global channel
 channel = int(input('Canal? [1/2]'))

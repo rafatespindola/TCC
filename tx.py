@@ -1,7 +1,5 @@
-import sys
 import numpy as np
 import pyaudio
-import matplotlib.pyplot as plt
 import crc_ifsc
 
 last_symbol = ''
