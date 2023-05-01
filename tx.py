@@ -152,15 +152,22 @@ def insert_reset_symbol(hex_esc):
 
     return 'h' + hex_esc + 'h'
  
+def msg_with_crc(msg):
+    c = crc_ifsc.CRC16(msg)
+    return c.gen_crc()
 
 
-while 1:
+while 1: 
     linha = input('>>> ')
-    data = linha.encode('ascii')
-    fcs = crc_ifsc.CRC16(data)
-    msg = fcs.gen_crc()
 
-    bytes_hex = msg.hex()
-    hex_esc = do_not_repeat_symbol(bytes_hex)
-    esc_reset = insert_reset_symbol(hex_esc)
-    from_hex_to_audio(esc_reset)
+    crc_chunk = 5
+
+    while linha:
+        l = linha[:crc_chunk]
+        data_bytes = l.encode('ascii')
+        msg_crc = msg_with_crc(data_bytes)
+        bytes_hex = msg_crc.hex()
+        hex_esc = do_not_repeat_symbol(bytes_hex)
+        esc_reset = insert_reset_symbol(hex_esc)
+        from_hex_to_audio(esc_reset)
+        linha = linha[crc_chunk:]

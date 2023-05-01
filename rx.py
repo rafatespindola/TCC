@@ -113,15 +113,16 @@ while 1:
 
     if len(buffer) > 2:
         try:
-            print('Chegou: ' + buffer)
+            # print('Chegou: ' + buffer)
             fcs = crc_ifsc.CRC16(bytes.fromhex(buffer))
             if fcs.check_crc():                    
-                print('CRC correto')
-                mensagem = bytes.fromhex(buffer).decode('ascii')
-                print(mensagem[:-2], end = "",  flush=True)
+                # print('CRC correto')
+                # print(bytes.fromhex(buffer))
+                mensagem = bytes.fromhex(buffer[:-4]).decode('ascii')
+                print(mensagem, end = "",  flush=True)
                 buffer = ''
-            else:
-                print('CRC invalido')
+            # else:
+                # print('CRC invalido')
         except:
             pass
     
