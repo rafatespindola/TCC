@@ -1,10 +1,13 @@
+import sys
 import numpy as np
 import pyaudio as pa 
 import struct 
-import matplotlib.pyplot as plt 
+import crc_ifsc
+import binascii
 
-channel = 2 # canal para comunicação
- 
+global channel
+channel = int(input('Canal? [1/2]'))
+
 CHUNK = 1024 * 2
 FORMAT = pa.paInt16
 CHANNELS = 1 # não alterar
@@ -17,7 +20,7 @@ stream = p.open(
     channels = CHANNELS,
     rate = RATE,
     input=True,
-    output=True,
+    output=False,
     frames_per_buffer=CHUNK
 )
 
@@ -108,10 +111,17 @@ while 1:
                 buffer = ''
                 # print('Chegou RESET - Buffer: ' + freqs_meaning[str(slot)])
 
-    if len(buffer) == 2:
+    if len(buffer) > 2:
         try:
-            print(bytes.fromhex(buffer).decode('ascii'))
-            buffer = ''
+            print('Chegou: ' + buffer)
+            fcs = crc_ifsc.CRC16(bytes.fromhex(buffer))
+            if fcs.check_crc():                    
+                print('CRC correto')
+                mensagem = bytes.fromhex(buffer).decode('ascii')
+                print(mensagem[:-2], end = "",  flush=True)
+                buffer = ''
+            else:
+                print('CRC invalido')
         except:
             pass
     
