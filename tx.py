@@ -65,58 +65,21 @@ def play(audio):
                     rate=44100,
                     output=True)
 
-    # play. May repeat with different volume values (if done interactively)
     stream.write(audio)
     stream.stop_stream()
     stream.close()
     p.terminate()    
 
-#TODO     
 def generate_audio(symbol_list, sequence):
     audio = b''
     for s in sequence:
-        if s == '0':
-            audio += symbol_list[0].tobytes()
-        elif s == '1':
-            audio += symbol_list[1].tobytes()
-        elif s == '2':
-            audio += symbol_list[2].tobytes()
-        elif s == '3':
-            audio += symbol_list[3].tobytes()
-        elif s == '4':
-            audio += symbol_list[4].tobytes()
-        elif s == '5':
-            audio += symbol_list[5].tobytes()
-        elif s == '6':
-            audio += symbol_list[6].tobytes()
-        elif s == '7':
-            audio += symbol_list[7].tobytes()
-        elif s == '8':
-            audio += symbol_list[8].tobytes()
-        elif s == '9':
-            audio += symbol_list[9].tobytes()
-        elif s == 'a':
-            audio += symbol_list[10].tobytes()
-        elif s == 'b':
-            audio += symbol_list[11].tobytes()
-        elif s == 'c':
-            audio += symbol_list[12].tobytes()
-        elif s == 'd':
-            audio += symbol_list[13].tobytes()
-        elif s == 'e':
-            audio += symbol_list[14].tobytes()
-        elif s == 'f':
-            audio += symbol_list[15].tobytes()
-        elif s == 'g': # esc
-            audio += symbol_list[16].tobytes() 
-        elif s == 'h': # reset
-            audio += symbol_list[17].tobytes()
+        audio += symbol_list[int(s, 18)].tobytes()
     return audio
 
 def generate_symbols(frequency_list, duration, sampling_rate):
     symbol_list= []
-    t = int(duration * sampling_rate)  # 480
-    template = np.arange(t) / sampling_rate  #
+    t = int(duration * sampling_rate)  
+    template = np.arange(t) / sampling_rate 
     x = np.linspace(0, np.pi, t)
     mask = np.sin(x)
     for freq in frequency_list:
@@ -124,34 +87,13 @@ def generate_symbols(frequency_list, duration, sampling_rate):
         symbol = np.multiply(sinal, mask).astype(np.float32)
         symbol_list.append(symbol)
 
-        # # plot
-        # x = template
-        # y = symbol
-        # plt.plot(x,y)
-        # plt.xlim(0, 0.08)
-        # plt.show()
-        # # end plot
-
     return symbol_list
 
+# Define o frame
 def insert_reset_symbol(hex_esc):
-    # # 'h' é o reset symbol
-    # # A cada 2X simbolos, 2x porque 1 byte possui 2 símbolos,
-    # # é inserido um reset de buffer do rx
-
-    # count = 0
-    # x = 5 # a cada quantos bytes um reset
-    # esc_reset = 'h' # uma comunicação sempre começa com um reset symbol
-
-    # for i in hex_esc:
-    #     esc_reset += i
-    #     count += 1
-    #     if count == (2*x):
-    #         esc_reset += 'h' # reset  
-    #         count = 0
-
     return 'h' + hex_esc + 'h'
  
+# Insere o CRC
 def msg_with_crc(msg):
     c = crc_ifsc.CRC16(msg)
     return c.gen_crc()
@@ -164,7 +106,7 @@ while 1:
 
     while linha:
         l = linha[:crc_chunk]
-        data_bytes = l.encode('ascii')
+        data_bytes = l.encode('UTF-8')
         msg_crc = msg_with_crc(data_bytes)
         bytes_hex = msg_crc.hex()
         hex_esc = do_not_repeat_symbol(bytes_hex)

@@ -27,7 +27,6 @@ stream = p.open(
 buffer = ''
 last_slot = ''
 
-
 if channel == 1:
     freqs_meaning = {
         '20': '0',
@@ -77,52 +76,45 @@ while 1:
     data_fft = np.abs(np.fft.fft(data_int))*2/(11000*CHUNK)
     f_bins = data_fft[20:91] > 1
 
-    # print(f_bins)
-
     # Obtem o slot mais baixo e salva no buffer
-    if len(np.where(f_bins)[0]) > 0:       
-        slot = int(np.where(f_bins)[0][0]) + 20
-        
-        # print(slot)
+    if len(np.where(f_bins)[0]) > 0:  
+
+        # Se achou mais de uma freq ao mesmo tempo, e tais no canal 2
+        #   Pegue a segunda freq
+        # Senão
+        #   Pegue a primeira mesmo
+        if len(np.where(f_bins)[0]) > 1 and channel == 2:
+            slot = int(np.where(f_bins)[0][1]) + 20
+        else:
+            slot = int(np.where(f_bins)[0][0]) + 20    
 
         if channel == 1 and slot not in [20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54]:
             slot = -1 # não deixa reconhecer uma frequencia que não está no seu canal
-            # print('limpou slot 1')
         elif channel == 2 and slot not in [56,58,60,62,64,66,68,70,72,74,76,78,80,82,84,86,88,90]:
             slot = -1 # não deixa reconhecer uma frequencia que não está no seu canal        
-            # print('limpou slot 2')
 
         if str(slot) in freqs_meaning.keys() and last_slot != slot:
-            # print(slot)
             last_slot = slot
             if freqs_meaning[str(slot)] not in 'gh':
                 # Se for de 0 a f, adicione
                 buffer += freqs_meaning[str(slot)]
-                # print('Adicionado: ' + freqs_meaning[str(slot)] + ' Buffer: ' + buffer)
             elif freqs_meaning[str(slot)] == 'g':
                 # Se for 'g', então é ESC.
                 # Repita o último caractere
                 if len(buffer) > 0:
                     buffer += buffer[-1]
-                # print('Chegou ESC - Buffer: ' + freqs_meaning[str(slot)])    
             elif freqs_meaning[str(slot)] == 'h':
                 # Se for 'h', então é pra limpar o buffer
                 # Serve para manter sincronismo
                 buffer = ''
-                # print('Chegou RESET - Buffer: ' + freqs_meaning[str(slot)])
 
     if len(buffer) > 2:
         try:
-            # print('Chegou: ' + buffer)
             fcs = crc_ifsc.CRC16(bytes.fromhex(buffer))
             if fcs.check_crc():                    
-                # print('CRC correto')
-                # print(bytes.fromhex(buffer))
-                mensagem = bytes.fromhex(buffer[:-4]).decode('ascii')
+                mensagem = bytes.fromhex(buffer[:-4]).decode('UTF-8') # retira 2 bytes (4 simbolos) do CRC 
                 print(mensagem, end = "",  flush=True)
                 buffer = ''
-            # else:
-                # print('CRC invalido')
         except:
             pass
     
