@@ -111,16 +111,17 @@ while 1:
                 buffer = ''
                 # print('Chegou RESET - Buffer: ' + freqs_meaning[str(slot)])
 
-    if len(buffer) == 10:
+    if len(buffer) > 2:
         try:
             print('Chegou: ' + buffer)
             fcs = crc_ifsc.CRC16(bytes.fromhex(buffer))
             if fcs.check_crc():                    
-                print(bytes.fromhex(buffer).decode('ascii'), end = "",  flush=True)
+                print('CRC correto')
+                mensagem = bytes.fromhex(buffer).decode('ascii')
+                print(mensagem[:-2], end = "",  flush=True)
+                buffer = ''
             else:
                 print('CRC invalido')
-
-            buffer = ''
         except:
             pass
     

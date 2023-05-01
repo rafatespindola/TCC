@@ -50,7 +50,7 @@ def from_hex_to_audio(bytes_hex_esc):
         #                 h(reset)[90] reseta o buffer do rx
                             1938.0]
     
-    duration = 0.08  # in seconds. Até 0.8 já funcionou bem.
+    duration = 0.2  # in seconds. Até 0.8 já funcionou bem.
     sampling_rate = 44100.0 
     symbol_list = generate_symbols(frequency_list, duration, sampling_rate)
     audio = generate_audio(symbol_list, bytes_hex_esc)
@@ -135,24 +135,22 @@ def generate_symbols(frequency_list, duration, sampling_rate):
     return symbol_list
 
 def insert_reset_symbol(hex_esc):
-    # 'h' é o reset symbol
-    # A cada 2X simbolos, 2x porque 1 byte possui 2 símbolos,
-    # é inserido um reset de buffer do rx
+    # # 'h' é o reset symbol
+    # # A cada 2X simbolos, 2x porque 1 byte possui 2 símbolos,
+    # # é inserido um reset de buffer do rx
 
-    count = 0
-    x = 5 # a cada quantos bytes um reset
-    esc_reset = 'h' # uma comunicação sempre começa com um reset symbol
+    # count = 0
+    # x = 5 # a cada quantos bytes um reset
+    # esc_reset = 'h' # uma comunicação sempre começa com um reset symbol
 
-    for i in hex_esc:
-        esc_reset += i
-        count += 1
-        if count == (2*x):
-            esc_reset += 'h' # reset  
-            count = 0
+    # for i in hex_esc:
+    #     esc_reset += i
+    #     count += 1
+    #     if count == (2*x):
+    #         esc_reset += 'h' # reset  
+    #         count = 0
 
-    print(esc_reset)
-
-    return esc_reset
+    return 'h' + hex_esc + 'h'
  
 
 
