@@ -106,7 +106,7 @@ while 1:
                 # Serve para manter sincronismo
                 buffer = ''
 
-    if len(buffer) == 2:
+    if len(buffer) > 2:
         try:
             fcs = crc_ifsc.CRC16(bytes.fromhex(buffer))
             if fcs.check_crc():                    
