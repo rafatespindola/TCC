@@ -2,7 +2,6 @@ import numpy as np
 import pyaudio
 import crc_ifsc
 
-last_symbol = ''
 channel = int(input('Canal? [1/2] '))
 
 def envia(quadro):
@@ -12,7 +11,7 @@ def envia(quadro):
         from_hex_to_audio(esc_reset)
 
 def do_not_repeat_symbol(bytes_hex):
-    global last_symbol
+    last_symbol = ''
     bytes_hex_esc = ''
     for b in bytes_hex:
         if b == last_symbol:
@@ -21,6 +20,7 @@ def do_not_repeat_symbol(bytes_hex):
         else:
             bytes_hex_esc += b
             last_symbol = b
+    last_symbol = ''            
     print('esc: ' + bytes_hex_esc)
 
     return bytes_hex_esc
